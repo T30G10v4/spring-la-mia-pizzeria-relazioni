@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link th:replace="~{/fragments/fragments :: head}">
+</head>
+    <body>
+        <nav th:replace="~{/fragments/fragments :: navbar('pizzas', false)}"></nav>
+        <div class="container" th:object="${pizza}">
+            <h1 th:text="*{name}"></h1>
+            <dl>
+                <dt>Ingredients</dt>
+                <dd th:text="*{description}"></dd>
+                <dt>Price</dt>
+                <dd th:text="*{price}"></dd>
+            </dl>
+            <h2>Promos</h2>
+            <a class="btn btn-primary" href="#">New Promo</a>
+            <h3>Active Promos</h3>
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Begin Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2023-04-05</td>
+                        <td>2023-05-05</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2023-04-05</td>
+                        <td>2023-05-05</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2023-04-05</td>
+                        <td>2023-05-05</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>

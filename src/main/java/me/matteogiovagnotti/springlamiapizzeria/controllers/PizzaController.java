@@ -7,6 +7,7 @@ import me.matteogiovagnotti.springlamiapizzeria.models.AlertMessage;
 import me.matteogiovagnotti.springlamiapizzeria.models.AlertMessage.AlertMessageType;
 import me.matteogiovagnotti.springlamiapizzeria.models.Pizza;
 import me.matteogiovagnotti.springlamiapizzeria.repositories.PizzaRepository;
+import me.matteogiovagnotti.springlamiapizzeria.services.IngredientService;
 import me.matteogiovagnotti.springlamiapizzeria.services.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -30,6 +31,9 @@ public class PizzaController {
 
     @Autowired
     private PizzaService pizzaService;
+
+    @Autowired
+    private IngredientService ingredientService;
 
     @GetMapping
     public String index(Model model, @RequestParam(name = "name") Optional<String> keyword){
@@ -56,7 +60,6 @@ public class PizzaController {
 
         Optional<Pizza> result = pizzaRepository.findById(id);
         if (result.isPresent()) {
-
             model.addAttribute("pizza", result.get());
             return "/pizzas/show";
 
@@ -71,6 +74,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredientsList", ingredientService.getAll());
         return "/pizzas/create";
     }
 
@@ -81,6 +85,7 @@ public class PizzaController {
         // VALIDATION
         if (bindingResult.hasErrors()) {
             // ritorno alla view con il form
+            model.addAttribute("ingredientsList", ingredientService.getAll());
             return "/pizzas/create";
         }
         // se non ci sono errori procedo con la persistenza

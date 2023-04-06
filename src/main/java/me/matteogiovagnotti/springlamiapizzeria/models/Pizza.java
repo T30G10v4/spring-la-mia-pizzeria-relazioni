@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "pizzas")
@@ -24,6 +25,13 @@ public class Pizza {
 
     @OneToMany(mappedBy = "pizza")
     private List<Promo> promos;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pizza_ingredient",
+            joinColumns = @JoinColumn(name = "pizza_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private Set<Ingredient> ingredients;
 
     public Integer getId() {
         return id;
@@ -63,5 +71,13 @@ public class Pizza {
 
     public void setPromos(List<Promo> promos) {
         this.promos = promos;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
